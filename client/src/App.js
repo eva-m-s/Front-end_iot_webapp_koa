@@ -2,9 +2,12 @@ import {useState} from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import FillForm from './components/FillForm';
+import MainView from './components/MainView';
 
 
-function App() {const [plants]=useState([
+function App() {
+  const [showFillForm, setshowFillForm]=useState(true)
+  const [plants]=useState([
   {
   id: 1,
   type: 'Kaktusowate' ,
@@ -50,7 +53,8 @@ function App() {const [plants]=useState([
 ] )
   return (
     <div className="App">
-        <FillForm plants={plants}/>
+        {showFillForm && <FillForm plants={plants} onOk ={()=> setshowFillForm(!showFillForm)} />}
+        {!showFillForm && <MainView onOk ={()=> setshowFillForm(!showFillForm)}/>}
     </div>
   );
 }

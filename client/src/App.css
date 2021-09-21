@@ -19,3 +19,27 @@
   min-width: 400px;
 }
 
+.main-view {
+  background-color: rgba(243, 241, 219, 0.4);
+  width: 90%;
+}
+
+.data-box{
+  background-color: rgba(243, 241, 219, 0.8);
+  width: 400px;
+  margin: 20px;
+
+}
+
+.message{
+  background-color: rgba(243, 241, 219, 0.8);
+  width: 840px;
+  margin: 20px;
+}
+
+@media (max-width:767px) {
+  .main-view {
+    flex-basis: calc(50% - 12px);
+  }
+}
+  
