@@ -61,6 +61,8 @@ const MainView = ({onOk}) => {
         "parameter": "light"
         }              
       ])
+    const [alertMessegeList, setalertMessegeList] = useState([]);
+
     return (
         <div className="container main-view ">
             <div className="row row justify-content-around">
@@ -76,7 +78,7 @@ const MainView = ({onOk}) => {
                 </div>
                 <div className="col">
                     <div className="row justify-content-around">
-                     <AlertMessage alertMessege={"Za mało wody"}/>  
+                     <AlertMessage record={record}/>  
                     </div>  
                     <div className="row justify-content-around">
                      <WateringMessage date={"2021-11-10"}/>  
