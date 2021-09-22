@@ -33,13 +33,25 @@
 
 .message{
   background-color: rgba(243, 241, 219, 0.8);
-  width: 840px;
+  width: 860px;
   margin: 20px;
 }
 
-@media (max-width:767px) {
+@media (max-width:600px) {
   .main-view {
     flex-basis: calc(50% - 12px);
   }
 }
-  
+
+.data-box-label{
+  display: block;
+  text-align: center;
+  line-height: 150%;
+  font-size: 2em;
+}
+
+.data-box-current{
+  display: block;
+  font-size: 1.5em;
+  font-weight: bolder;
+}
