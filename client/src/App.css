@@ -28,13 +28,15 @@
   background-color: rgba(243, 241, 219, 0.8);
   width: 400px;
   margin: 20px;
+  padding: 5px;
 
 }
 
 .message{
   background-color: rgba(243, 241, 219, 0.8);
-  width: 860px;
+  width: 840px;
   margin: 20px;
+  padding: 5px;
 }
 
 @media (max-width:600px) {
@@ -52,6 +54,7 @@
 
 .data-box-current{
   display: block;
+  text-align: center;
   font-size: 1.5em;
   font-weight: bolder;
 }

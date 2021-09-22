@@ -1,6 +1,10 @@
 import {useState} from 'react'
-import DataBox from './DataBox'
-import Message from './Message'
+import DataBoxTemp from './DataBoxTemp'
+import DataBoxHum from './DataBoxHum'
+import DataBoxSun from './DataBoxSun'
+import DataBoxSoil from './DataBoxSoil'
+import AlertMessage from './AlertMessage'
+import WateringMessage from './WateringMessage'
 import temp from "../images/temp.png";
 import hum from "../images/hum.png";
 import sun from "../images/sun.png";
@@ -28,18 +32,56 @@ const MainView = ({onOk}) => {
         "minimum": 10 ,
         "minimumAt": "2021-09-10 12:12:53" ,
         "parameter": "temperature"
-        }           
+        },
+        {
+        "average": 0.25 ,
+        "id": "888a92a6-0ca3-480d-9bef-072ec687a1e9" ,
+        "maximum": 1 ,
+        "maximumAt": "2021-09-09 13:46:37" ,
+        "minimum": 0 ,
+        "minimumAt": "2021-09-10 12:25:38" ,
+        "parameter": "soil"
+        },
+        {
+        "average": 60 ,
+        "id": "888a92a6-0ca3-480d-9bef-072ec687a111" ,
+        "maximum": 80 ,
+        "maximumAt": "2021-09-09 20:51:37" ,
+        "minimum": 54 ,
+        "minimumAt": "2021-09-10 12:25:38" ,
+        "parameter": "humidity"
+        },
+        {
+        "average": 50 ,
+        "id": "888a92a6-0ca3-480d-9bef-072ec687a111" ,
+        "maximum": 95 ,
+        "maximumAt": "2021-09-09 12:05:37" ,
+        "minimum": 8 ,
+        "minimumAt": "2021-09-10 2:25:38" ,
+        "parameter": "light"
+        }              
       ])
     return (
-        <div className="container-fluid main-view ">
+        <div className="container main-view ">
             <div className="row row justify-content-around">
-                <DataBox parameter="Temperatura" image={temp} record={record} data={data}/>  
-                <DataBox parameter="Wilgotność powietrza" image={hum} record={record} data={data}/>  
-                <DataBox parameter="Nasłonecznienie" image={sun} record={record} data={data}/>  
+                <DataBoxTemp parameter="Temperatura" image={temp} record={record} data={data} type={"temperature"}/>  
+                <DataBoxHum parameter="Wilgotność powietrza" image={hum} record={record} data={data} type={"humidity"}/>  
+                <DataBoxSun parameter="Nasłonecznienie" image={sun} record={record} data={data} type={"light"}/>  
             </div>
             <div className="row row justify-content-around">
-                <DataBox parameter="Wilgotnośc gleby" image={soil} record={record} data={data}/>
-                <Message/> 
+            <div className="col">
+            <div className="row justify-content-around">
+                <DataBoxSoil parameter="Wilgotnośc gleby" image={soil} record={record} data={data} type={"soil"}/>
+                </div>
+                </div>
+                <div className="col">
+                    <div className="row justify-content-around">
+                     <AlertMessage alertMessege={"Za mało wody"}/>  
+                    </div>  
+                    <div className="row justify-content-around">
+                     <WateringMessage date={"2021-11-10"}/>  
+                    </div> 
+                </div>
             </div>
         </div>
     

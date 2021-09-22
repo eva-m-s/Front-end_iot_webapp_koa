@@ -1,4 +1,4 @@
-const DataBox = ({parameter,image,record,data,type}) => {
+const DataBoxHum = ({parameter,image,record,data,type}) => {
     return (
 <div className="container data-box">
     <div className="row">
@@ -6,18 +6,18 @@ const DataBox = ({parameter,image,record,data,type}) => {
     </div>
 <div className="row">
   <div className="col-6">
-    <img src={image} alt="Temp"/>   
+    <img src={image} alt="Hum"/>   
   </div>
 
   <div className="col-6 align-self-center">
   {record.map((record) => (
     <div className="row align-items-end data-box-current">
-        {record.temperature} &#176;C
+        {record.humidity} %
     </div>
   ))}
     <div className="row ">
     {data.filter(data => data.parameter === type).flatMap(data => (
-      <span> Średnia dobowa: {data.average} &#176;C </span>
+      <span> Średnia dobowa: {data.average} % </span>
     ))}
     </div>      
   </div>
@@ -25,12 +25,12 @@ const DataBox = ({parameter,image,record,data,type}) => {
   <div className="row align-items-center">
     <div className="col-5 align-self-start">
     {data.filter(data => data.parameter === type).flatMap(data => (
-     <span> Maksymalna temperatura: {data.maximum} &#176;C [{data.maximumAt}]</span>
+     <span> Maksymalna wilgotność: {data.maximum} % [{data.maximumAt}]</span>
     ))}
     </div>
     <div className="col-5 align-self-start">
     {data.filter(data => data.parameter === type).flatMap(data => (
-     <span> Minimalna temperatura: {data.minimum} &#176;C [{data.minimumAt}] </span>
+     <span> Minimalna wilgotność: {data.minimum} % [{data.minimumAt}] </span>
     ))}
     </div>
   </div> 
@@ -39,4 +39,4 @@ const DataBox = ({parameter,image,record,data,type}) => {
     )
 }
 
-export default DataBox
+export default DataBoxHum

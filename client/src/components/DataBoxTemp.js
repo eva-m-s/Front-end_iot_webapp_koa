@@ -1,15 +1,15 @@
-const DataBox = ({parameter,image,record,data,type}) => {
+const DataBoxTemp = ({parameter,image,record,data,type}) => {
     return (
 <div className="container data-box">
     <div className="row">
         <label className="data-box-label">{parameter}</label>
     </div>
 <div className="row">
-  <div className="col-6">
+  <div className="col-4">
     <img src={image} alt="Temp"/>   
   </div>
 
-  <div className="col-6 align-self-center">
+  <div className="col-7 align-self-center">
   {record.map((record) => (
     <div className="row align-items-end data-box-current">
         {record.temperature} &#176;C
@@ -39,4 +39,4 @@ const DataBox = ({parameter,image,record,data,type}) => {
     )
 }
 
-export default DataBox
+export default DataBoxTemp
