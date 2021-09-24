@@ -62,11 +62,11 @@ const record =
 
 {
 	"datetime": "2021-09-10 12:25:38" ,
-	"humidity": 100 ,
+	"humidity": 10 ,
 	"id": "67664640-83cf-493f-bfee-54f611e39127" ,
-	"light": 95 ,
+	"light": 2 ,
 	"soil": 5 ,
-	"temperature": 20
+	"temperature": 2
 	}
 	const data =[
 	{
