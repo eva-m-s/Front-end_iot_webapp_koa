@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import DataBoxTemp from './DataBoxTemp'
 import DataBoxHum from './DataBoxHum'
 import DataBoxSun from './DataBoxSun'
@@ -10,8 +10,8 @@ import hum from "../images/hum.png";
 import sun from "../images/sun.png";
 import soil from "../images/soil.png";
 
-const MainView = ({onOk}) => {
-    const [record]=useState([
+const MainView = ({onOk,socket}) => {
+    /*const [record]=useState([
         {
             "datetime": "2021-09-10 12:25:38" ,
             "humidity": 64 ,
@@ -21,9 +21,22 @@ const MainView = ({onOk}) => {
             "temperature": 20
             }
             
-      ])
+      ])*/
+      const [record,setRecord]=useState([])
+      useEffect(() => {
+        socket.on('getRecord', (record) => {
+        setRecord([record])
+        });
+      }, [socket]);
 
-      const [data]=useState([
+      const [data,setData]=useState([])
+      useEffect(() => {
+        socket.on('getData', (data) => {
+        setData(data)
+        });
+      }, [socket]);
+
+      /*const [data]=useState([
         {
         "average": 18.75 ,
         "id": "36699f98-b0ec-443d-a63a-cd94ecc5325b" ,
@@ -60,7 +73,7 @@ const MainView = ({onOk}) => {
         "minimumAt": "2021-09-10 2:25:38" ,
         "parameter": "light"
         }              
-      ])
+      ])*/
     const [alertMessegeList, setalertMessegeList] = useState([]);
 
     return (

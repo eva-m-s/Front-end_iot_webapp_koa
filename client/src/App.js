@@ -1,12 +1,14 @@
+import io from 'socket.io-client';
 import {useState, useEffect} from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import FillForm from './components/FillForm';
 import MainView from './components/MainView';
 
+const socket = io.connect("http://localhost:3001");
 
 function App() {
-  const [showFillForm, setshowFillForm]=useState(true)
+  //const [showFillForm, setshowFillForm]=useState(true)
   const [islocalStoregeEmpty, setislocalStoregeEmpty]=useState(true)
 
   useEffect(() => {
@@ -15,8 +17,13 @@ function App() {
     else {setislocalStoregeEmpty(false)}
 }, []);
   
-   
-  const [plants]=useState([
+ const [plants,setPlants] = useState([])
+ useEffect(() => {
+    socket.on("getPlants", (plants) => {
+      setPlants(plants);
+    });
+  }, []);
+ /* const [plants]=useState([
   {
   id: 1,
   type: 'Kaktusowate' ,
@@ -72,11 +79,11 @@ function App() {
             ligh: 'medium' 
         }
     ]}
-] )
+] )*/
   return (
     <div className="App">
         {islocalStoregeEmpty  && <FillForm plants={plants} />}
-        {!islocalStoregeEmpty &&  <MainView onOk ={()=>{setislocalStoregeEmpty(true);console.log(islocalStoregeEmpty)}}/>}
+        {!islocalStoregeEmpty &&  <MainView socket={socket} onOk ={()=>{setislocalStoregeEmpty(true);console.log(islocalStoregeEmpty)}}/>}
     </div>
   );
 }
