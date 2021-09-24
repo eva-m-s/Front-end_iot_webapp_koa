@@ -82,7 +82,13 @@ const MainView = ({onOk}) => {
                     </div>  
                     <div className="row justify-content-around">
                      <WateringMessage date={"2021-11-10"}/>  
-                    </div> 
+                    </div>
+                    </div>
+                    <div className="col">
+                    <div className="row justify-content-around">
+                    <button onClick={onOk} className="w-25 btn btn-lg btn-success btn-mine">Wróc</button>
+                    </div>
+
                 </div>
             </div>
         </div>

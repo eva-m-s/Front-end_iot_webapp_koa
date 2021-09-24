@@ -1,10 +1,39 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import '../App.css';
 
+function getType(){
+    const storedType = localStorage.getItem('type');
+    if(!storedType) return 'Inny';
+    else return JSON.parse(storedType);
 
-const FillForm = ({plants, onOk}) => {
-    const [type, setType]=useState('Inny')
-    const [species, setSpecies]=useState('Inny')
+}
+
+function getSpecies(){
+    const storedSpecies = localStorage.getItem('species');
+    if(!storedSpecies) return 'Inny';
+    else return JSON.parse(storedSpecies);
+}
+
+
+const FillForm = ({plants}) => {
+    const [type, setType]=useState(getType)
+    const [species, setSpecies]=useState(getSpecies)
+
+    /*useEffect(() => {
+		localStorage.setItem('type', JSON.stringify(type));
+	}, [type]);
+
+    useEffect(() => {
+		localStorage.setItem('species', JSON.stringify(species));
+	}, [species]);*/
+
+    const onAccept=()=>{
+        localStorage.setItem('type', JSON.stringify(type));
+        localStorage.setItem('species', JSON.stringify(species));
+    }
+
+
+
         return (
             <div className="container fill-form">
                 <form>
@@ -20,8 +49,8 @@ const FillForm = ({plants, onOk}) => {
                         <select className="form-select custom-select mb-3" onChange={(e)=>
                             setType(e.target.value)
                             }>
-                            <option defaultValue>Inny</option>
-                            {plants.map((plant) => (
+                            <option defaultValue>{type}</option>
+                            {plants.filter(plant =>plant.type !==type).flatMap((plant) => (
                             <option key ={plant.id} value={plant.type}>{plant.type}</option>
                             ))} 
                         </select>
@@ -33,7 +62,7 @@ const FillForm = ({plants, onOk}) => {
                         //console.log(type)
                         setSpecies(e.target.value)
                         }>
-                            <option defaultValue>Inny</option>
+                            <option defaultValue>{species}</option>
                             {
                             type !== 'Inny'
                             ? (plants.filter(plant => plant.type === type).flatMap(plant => (
@@ -44,12 +73,10 @@ const FillForm = ({plants, onOk}) => {
                             plant.species.flatMap(function(names,index){
                             return <option key ={names.name} value={names.name}>{names.name}</option>
                             })))}
-
                         </select> 
                     </div>
                     
-                    <button onClick={onOk} className="w-100 btn btn-lg btn-success" type="submit">OK
-                    </button>
+                    <button onClick={onAccept} className="w-100 btn btn-lg btn-success">OK</button>
 
                 </form>
             </div>

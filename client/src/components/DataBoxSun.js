@@ -11,13 +11,13 @@ const DataBoxSun = ({parameter,image,record,data,type}) => {
 
   <div className="col-6 align-self-center">
   {record.map((record) => (
-    <div className="row align-items-end data-box-current">
+    <div key ={record.id} className="row align-items-end data-box-current">
         {record.light} %
     </div>
   ))}
     <div className="row ">
     {data.filter(data => data.parameter === type).flatMap(data => (
-      <span> Średnia dobowa: {data.average} % </span>
+      <span key ={data.id}> Średnia dobowa: {data.average} % </span>
     ))}
     </div>      
   </div>
@@ -25,12 +25,12 @@ const DataBoxSun = ({parameter,image,record,data,type}) => {
   <div className="row align-items-center">
     <div className="col-5 align-self-start">
     {data.filter(data => data.parameter === type).flatMap(data => (
-     <span> Maksymalne nasłonecznienie: {data.maximum} % [{data.maximumAt}]</span>
+     <span key ={data.id}> Maksymalne nasłonecznienie: {data.maximum} % [{data.maximumAt}]</span>
     ))}
     </div>
     <div className="col-5 align-self-start">
     {data.filter(data => data.parameter === type).flatMap(data => (
-     <span> Minimalne nasłonecznienie: {data.minimum} % [{data.minimumAt}] </span>
+     <span key ={data.id}> Minimalne nasłonecznienie: {data.minimum} % [{data.minimumAt}] </span>
     ))}
     </div>
   </div> 
