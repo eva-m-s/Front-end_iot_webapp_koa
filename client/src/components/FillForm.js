@@ -27,6 +27,15 @@ const FillForm = ({plants}) => {
 		localStorage.setItem('species', JSON.stringify(species));
 	}, [species]);*/
 
+
+    /*{plants.flatMap((plant => (
+        plant.species.flatMap(function(names,index){
+        return names.name})))).filter(function(names){
+        return names !=="Aloes";
+        }).flatMap(function(names,index){
+        return console.log(names)
+    })}*/
+
     const onAccept=()=>{
         localStorage.setItem('type', JSON.stringify(type));
         localStorage.setItem('species', JSON.stringify(species));
@@ -46,9 +55,10 @@ const FillForm = ({plants}) => {
                     
                     <div className="form-group">
                         <label>Typ</label>
-                        <select className="form-select custom-select mb-3" onChange={(e)=>
+                        <select className="form-select custom-select mb-3" onChange={(e)=>{
                             setType(e.target.value)
-                            }>
+                            console.log(type)
+                        }}>
                             <option defaultValue>{type}</option>
                             {plants.filter(plant =>plant.type !==type).flatMap((plant) => (
                             <option key ={plant.id} value={plant.type}>{plant.type}</option>
@@ -58,11 +68,12 @@ const FillForm = ({plants}) => {
 
                     <div className="form-group">
                         <label>Gatunek</label>
-                        <select className="form-select mb-3" onChange={(e)=>
-                        //console.log(type)
+                        <select className="form-select mb-3" onChange={(e)=>{
                         setSpecies(e.target.value)
-                        }>
-                            <option defaultValue>{species}</option>
+                        console.log(species)
+                        }}>
+                            
+                            <option defaultValue>{species}</option>                     
                             {
                             type !== 'Inny'
                             ? (plants.filter(plant => plant.type === type).flatMap(plant => (
@@ -73,7 +84,8 @@ const FillForm = ({plants}) => {
                             plant.species.flatMap(function(names,index){
                             return <option key ={names.name} value={names.name}>{names.name}</option>
                             })))}
-                        </select> 
+                        </select>
+
                     </div>
                     
                     <button onClick={onAccept} className="w-100 btn btn-lg btn-success">OK</button>

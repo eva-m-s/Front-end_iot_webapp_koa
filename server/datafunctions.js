@@ -29,7 +29,7 @@ const plants=[
 		{
 			nr: 14,
 			name: 'Storczyk',
-			temp: 'warm' ,
+			temp: 25 ,
 			hum: 'medium' ,
 			soil: 'medium' ,
 			ligh: 'medium' 
@@ -37,7 +37,7 @@ const plants=[
 		{
 			nr: 15,
 			name: 'Skrzydłokwiat',
-			temp: 'medium' ,
+			temp: 15 ,
 			hum: 'low' ,
 			soil: 'wet' ,
 			ligh: 'low' 
@@ -66,7 +66,7 @@ const record =
 	"id": "67664640-83cf-493f-bfee-54f611e39127" ,
 	"light": 2 ,
 	"soil": 5 ,
-	"temperature": 2
+	"temperature": 10
 	}
 	const data =[
 	{

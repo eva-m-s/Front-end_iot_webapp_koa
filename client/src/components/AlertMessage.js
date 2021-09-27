@@ -4,24 +4,52 @@ let messageData = "";
 let messageDataHum = "";
 let messageDataSun = "";
 let messageDataSoil = "";
-const AlertMessage = ({record}) => {
+
+
+function getType(){
+    const storedType = localStorage.getItem('type');
+    if(!storedType) return 'Inny';
+    else return JSON.parse(storedType);
+}
+
+function getSpecies(){
+    const storedSpecies = localStorage.getItem('species');
+    if(!storedSpecies) return 'Inny';
+    else return JSON.parse(storedSpecies);
+}
+
+const AlertMessage = ({record, plants}) => {
 
 
     const [messageList, setMessageList] = useState([{messege:""}]);
-    
-    
-    
+    const [type]=useState(getType);
+    const [species]=useState(getSpecies);
+
+   /* const temp = plants.filter(plant => plant.type === type).flatMap(plant => (
+        plant.species.flatMap(function(names){
+        return names.name; }))).filter(function(names){
+            return names === species;  
+        }).flatMap(function(temps){
+            return temps;
+        })*/
+        const temp = plants.filter(plant => plant.type === type).flatMap(plant => (
+            plant.species.filter(function(names){
+                return names.name === species; }))) 
+            .flatMap(function(temps){
+                return temps.temp;
+            })
+
     useEffect(() => {
     const unpackTemp = record.map(function(record){
         return record.temperature;
     });
-    if (unpackTemp >10) {
+    if (unpackTemp >30) {
     messageData={   
     messege: "Za gorąco!"
     }
     //setMessageList((messageList) => [messageData]);
     }
-    else if (unpackTemp < 5) {
+    else if (unpackTemp < temp) {
         messageData={   
         messege: "Za zimno!"
         }
@@ -79,6 +107,7 @@ const AlertMessage = ({record}) => {
             }
             //setMessageList((messageList) => [...messageList,messageData]);
             }
+            console.log(temp)
             setMessageList((messageList) => [...messageList,messageDataSun]); 
 
         const unpackSoil = record.map(function(record){

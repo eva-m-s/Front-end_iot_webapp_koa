@@ -5,6 +5,7 @@ import './App.css';
 import FillForm from './components/FillForm';
 import MainView from './components/MainView';
 
+//const socket = io.connect("http://192.168.1.18:3001");
 const socket = io.connect("http://localhost:3001");
 
 function App() {
@@ -83,7 +84,7 @@ function App() {
   return (
     <div className="App">
         {islocalStoregeEmpty  && <FillForm plants={plants} />}
-        {!islocalStoregeEmpty &&  <MainView socket={socket} onOk ={()=>{setislocalStoregeEmpty(true);console.log(islocalStoregeEmpty)}}/>}
+        {!islocalStoregeEmpty &&  <MainView plants={plants} socket={socket} onOk ={()=>{setislocalStoregeEmpty(true);console.log(islocalStoregeEmpty)}}/>}
     </div>
   );
 }

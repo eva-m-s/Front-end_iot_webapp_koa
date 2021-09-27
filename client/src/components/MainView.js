@@ -10,7 +10,8 @@ import hum from "../images/hum.png";
 import sun from "../images/sun.png";
 import soil from "../images/soil.png";
 
-const MainView = ({onOk,socket}) => {
+
+const MainView = ({onOk,socket,plants}) => {
     /*const [record]=useState([
         {
             "datetime": "2021-09-10 12:25:38" ,
@@ -74,7 +75,6 @@ const MainView = ({onOk,socket}) => {
         "parameter": "light"
         }              
       ])*/
-    const [alertMessegeList, setalertMessegeList] = useState([]);
 
     return (
         <div className="container main-view ">
@@ -91,7 +91,7 @@ const MainView = ({onOk,socket}) => {
                 </div>
                 <div className="col">
                     <div className="row justify-content-around">
-                     <AlertMessage record={record}/>  
+                     <AlertMessage record={record} plants={plants}/>  
                     </div>  
                     <div className="row justify-content-around">
                      <WateringMessage date={"2021-11-10"}/>  
