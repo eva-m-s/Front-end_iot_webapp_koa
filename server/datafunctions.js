@@ -66,7 +66,7 @@ const record =
 	"id": "67664640-83cf-493f-bfee-54f611e39127" ,
 	"light": 2 ,
 	"soil": 5 ,
-	"temperature": 10
+	"temperature": 80
 	}
 	const data =[
 	{

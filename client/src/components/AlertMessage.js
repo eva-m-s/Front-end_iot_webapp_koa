@@ -1,5 +1,6 @@
 import {useState,useEffect} from 'react'
 import alert from '../images/alert.png';
+import {tempFuzz} from './functions.js'
 let messageData = "";
 let messageDataHum = "";
 let messageDataSun = "";
@@ -32,12 +33,13 @@ const AlertMessage = ({record, plants}) => {
         }).flatMap(function(temps){
             return temps;
         })*/
+
         const temp = plants.filter(plant => plant.type === type).flatMap(plant => (
-            plant.species.filter(function(names){
-                return names.name === species; }))) 
-            .flatMap(function(temps){
-                return temps.temp;
-            })
+        plant.species.filter(function(names){
+            return names.name === species; }))) 
+        .flatMap(function(temps){
+            return temps.temp;
+        })
 
     useEffect(() => {
     const unpackTemp = record.map(function(record){
@@ -107,7 +109,7 @@ const AlertMessage = ({record, plants}) => {
             }
             //setMessageList((messageList) => [...messageList,messageData]);
             }
-            console.log(temp)
+            console.log(tempFuzz(30))
             setMessageList((messageList) => [...messageList,messageDataSun]); 
 
         const unpackSoil = record.map(function(record){

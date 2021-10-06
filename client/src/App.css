@@ -63,3 +63,15 @@
   margin: 20px;
   padding: 5px; 
 }
+
+.chosen{
+  align-self: center;
+  text-align: center;
+  color: white;
+  font-size: 1.3em;
+  background-color: rgb(14, 119, 84);
+  border-radius: 5px;
+  width: 300px;
+  margin: 20px;
+  padding: 5px;
+}

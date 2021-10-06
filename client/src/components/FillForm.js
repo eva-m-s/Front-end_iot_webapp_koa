@@ -59,7 +59,7 @@ const FillForm = ({plants}) => {
                             setType(e.target.value)
                             console.log(type)
                         }}>
-                            <option defaultValue>{type}</option>
+                            <option  defaultValue>{type}</option>
                             {plants.filter(plant =>plant.type !==type).flatMap((plant) => (
                             <option key ={plant.id} value={plant.type}>{plant.type}</option>
                             ))} 
@@ -73,17 +73,19 @@ const FillForm = ({plants}) => {
                         console.log(species)
                         }}>
                             
-                            <option defaultValue>{species}</option>                     
+                            <option hidden defaultValue>{species}</option>
+                            {type !== 'Inny' && <option value="Inny">Inny</option>}
                             {
                             type !== 'Inny'
                             ? (plants.filter(plant => plant.type === type).flatMap(plant => (
-                            plant.species.flatMap(function(names,index){
-                            return <option key ={names.name} value={names.name}>{names.name}</option>
+                            plant.species.flatMap(function(names){
+                            return <option key ={names.nr} value={names.name}>{names.name}</option>
                             }))))
                             : plants.flatMap((plant) => (
-                            plant.species.flatMap(function(names,index){
-                            return <option key ={names.name} value={names.name}>{names.name}</option>
+                            plant.species.flatMap(function(names){
+                            return <option key ={names.nr} value={names.name}>{names.name}</option>
                             })))}
+                           
                         </select>
 
                     </div>

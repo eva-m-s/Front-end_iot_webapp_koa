@@ -9,6 +9,9 @@ import temp from "../images/temp.png";
 import hum from "../images/hum.png";
 import sun from "../images/sun.png";
 import soil from "../images/soil.png";
+let dt=[];
+const storedType = localStorage.getItem('type');
+const storedSpecies = localStorage.getItem('species');
 
 
 const MainView = ({onOk,socket,plants}) => {
@@ -27,15 +30,23 @@ const MainView = ({onOk,socket,plants}) => {
       useEffect(() => {
         socket.on('getRecord', (record) => {
         setRecord([record])
+        console.log([record])
         });
       }, [socket]);
-
+      
       const [data,setData]=useState([])
       useEffect(() => {
-        socket.on('getData', (data) => {
-        setData(data)
-        });
+       // dt=[];
+        socket.on('getData', (data) => { 
+        dt.push(data)
+        //setTimeout(function() {setData(dt);},10); 
+        setData(data);
+        
+      });
+        
+        console.log(dt)
       }, [socket]);
+
 
       /*const [data]=useState([
         {
@@ -97,9 +108,14 @@ const MainView = ({onOk,socket,plants}) => {
                      <WateringMessage date={"2021-11-10"}/>  
                     </div>
                     </div>
-                    <div className="col">
-                    <div className="row justify-content-around">
-                    <button onClick={onOk} className="w-25 btn btn-lg btn-success btn-mine">Wróc</button>
+                    <div className="col align-content-end">
+                    <div className="row row justify-content-evenly">
+                    <div className="col-7 align-content-center">
+                    <div className="chosen w-100">Wybrany typ: <b>{storedType}</b> wybrany gatunek: <b>{storedSpecies}</b></div>
+                   </div>
+                    <div className="col-3 align-content-center">
+                    <button onClick={onOk} className="w-75 btn btn-lg btn-success btn-mine">Zmień</button>
+                    </div>
                     </div>
 
                 </div>
