@@ -1,18 +1,26 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react';
 import alert from '../images/alert.png';
-import {tempFuzz} from './functions.js'
+import {tempFuzz} from './functions.js';
+import {humFuzz} from './functions.js';
+import {soilFuzz} from './functions.js';
+import {lightFuzz} from './functions.js';
+
+/*....................................
+---------------VARIABLES--------------
+....................................*/
 let messageData = "";
 let messageDataHum = "";
 let messageDataSun = "";
 let messageDataSoil = "";
+let refVal;
 
-
+//-------------FUNCTION TO GET TYPE--------------
 function getType(){
     const storedType = localStorage.getItem('type');
     if(!storedType) return 'Inny';
     else return JSON.parse(storedType);
 }
-
+//------------FUNCTION TO GET SPECIES--------------
 function getSpecies(){
     const storedSpecies = localStorage.getItem('species');
     if(!storedSpecies) return 'Inny';
@@ -20,8 +28,6 @@ function getSpecies(){
 }
 
 const AlertMessage = ({record, plants}) => {
-
-
     const [messageList, setMessageList] = useState([{messege:""}]);
     const [type]=useState(getType);
     const [species]=useState(getSpecies);
@@ -33,25 +39,61 @@ const AlertMessage = ({record, plants}) => {
         }).flatMap(function(temps){
             return temps;
         })*/
-
-        const temp = plants.filter(plant => plant.type === type).flatMap(plant => (
+    
+    /*.....................................................
+    -------GETTING REFERENCIAL VALUES FOR PLANTS-----------
+    ......................................................*/    
+    useEffect(() => {
+    if(species==='Inny'&& type ==='Inny'){
+        refVal = plants.filter(plant => plant.type === type).flatMap(plant => (
         plant.species.filter(function(names){
             return names.name === species; }))) 
-        .flatMap(function(temps){
-            return temps.temp;
-        })
+        .flatMap(function(refs){
+            const tempRefs=[refs.temp,refs.hum, refs.soil,refs.light];
+           return [tempRefs[0][0],tempRefs[1][0],tempRefs[2][0],tempRefs[3][0]]
+        })}
+    else if(species==='Inny'&& type ==='Kwitnące'){
+    refVal = plants.filter(plant => plant.type === 'Inny').flatMap(plant => (
+        plant.species.filter(function(names){
+            return names.name === 'Inny'; }))) 
+        .flatMap(function(refs){
+            const tempRefs=[refs.temp,refs.hum, refs.soil,refs.light];
+            return [tempRefs[0][2],tempRefs[1][2],tempRefs[2][2],tempRefs[3][2]]
+        })}
+    else if(species==='Inny'&& type ==='Kaktusowate'){
+        refVal = plants.filter(plant => plant.type === 'Inny').flatMap(plant => (
+            plant.species.filter(function(names){
+                return names.name === 'Inny'; }))) 
+            .flatMap(function(refs){
+                const tempRefs=[refs.temp,refs.hum, refs.soil,refs.light];
+                return [tempRefs[0][1],tempRefs[1][1],tempRefs[2][1],tempRefs[3][1]]
+            })}
 
-    useEffect(() => {
+    else{refVal = plants.flatMap(plant => (
+        plant.species.filter(function(names){
+            return names.name === species; }))) 
+        .flatMap(function(refs){
+            return [refs.temp,refs.hum, refs.soil,refs.light]
+        })}
+   /* const refVal = plants.flatMap(plant => (
+        plant.species.filter(function(names){
+            return names.name === species; }))) 
+        .flatMap(function(refs){
+            return [refs.temp,refs.hum, refs.soil,refs.light]
+        });*/
+    /*.....................................................
+    ------------------COMPARE TEMPERATURE-------------------
+    ......................................................*/     
     const unpackTemp = record.map(function(record){
         return record.temperature;
     });
-    if (unpackTemp >30) {
+    if (tempFuzz(unpackTemp) > refVal[0]) {
     messageData={   
     messege: "Za gorąco!"
     }
     //setMessageList((messageList) => [messageData]);
     }
-    else if (unpackTemp < temp) {
+    else if (tempFuzz(unpackTemp) < refVal[0]) {
         messageData={   
         messege: "Za zimno!"
         }
@@ -65,16 +107,19 @@ const AlertMessage = ({record, plants}) => {
         }
         setMessageList((messageList) => [messageData]);
 
+        /*.....................................................
+        ------------------COMPARE HUMIDITY-------------------
+        ......................................................*/
         const unpackHum = record.map(function(record){
             return record.humidity;
         });
-        if (unpackHum > 90) {
+        if (humFuzz(unpackHum) > refVal[1]) {
         messageDataHum={   
         messege: "Za wilgotno!"
         }
         //setMessageList((messageList) => [messageData]);
         }
-        else if (unpackHum < 50) {
+        else if (humFuzz(unpackHum) < refVal[1]) {
             messageDataHum={   
             messege: "Za sucho!"
             }
@@ -86,18 +131,22 @@ const AlertMessage = ({record, plants}) => {
             }
             //setMessageList((messageList) => [messageData]);
             }
+            
         setMessageList((messageList) => [...messageList,messageDataHum]);
 
+        /*.....................................................
+        ------------------COMPARE LIGHT-------------------
+        ......................................................*/
         const unpackSun = record.map(function(record){
             return record.light;
         });
-        if (unpackSun > 95) {
+        if (lightFuzz(unpackSun) > refVal[3]) {
         messageDataSun={   
         messege: "Za dużo słońca!"
         }
         //setMessageList((messageList) => [...messageList, messageData]);
         }
-        else if (unpackSun < 20) {
+        else if (lightFuzz(unpackSun) < refVal[3]) {
             messageDataSun={   
             messege: "Za mało słońca!"
             }
@@ -109,19 +158,22 @@ const AlertMessage = ({record, plants}) => {
             }
             //setMessageList((messageList) => [...messageList,messageData]);
             }
-            console.log(tempFuzz(30))
+            
             setMessageList((messageList) => [...messageList,messageDataSun]); 
 
+        /*.....................................................
+        -----------------------COMPARE SOIL--------------------
+        ......................................................*/
         const unpackSoil = record.map(function(record){
             return record.soil;
         });
-        if (unpackSoil > 80) {
+        if (soilFuzz(unpackSoil) > refVal[2]) {
         messageDataSoil={   
         messege: "Za dużo wody!"
         }
         //setMessageList((messageList) => [...messageList, messageData]);
         }
-        else if (unpackSoil < 30) {
+        else if (soilFuzz(unpackSoil) < refVal[2]) {
             messageDataSoil={   
             messege: "Za mało wody!"
             }
@@ -134,8 +186,11 @@ const AlertMessage = ({record, plants}) => {
             //setMessageList((messageList) => [...messageList,messageData]);
             }
             setMessageList((messageList) => [...messageList,messageDataSoil]);
-    
-     }, [record]);
+}, [record,species,type,plants]);
+
+/*.....................................................
+------------ACTUAL ALLERT MESSAGE COMPONENT------------
+......................................................*/
     return (
         <div className="message">
             <div className="row align-items-center">

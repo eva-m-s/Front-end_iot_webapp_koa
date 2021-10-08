@@ -5,21 +5,28 @@ import './App.css';
 import FillForm from './components/FillForm';
 import MainView from './components/MainView';
 
+/*....................................
+---------------VARIABLES--------------
+....................................*/
 //const socket = io.connect("http://192.168.1.18:3001");
 //const socket = io.connect("http://192.168.1.15:3001");
 const socket = io.connect("http://localhost:3001");
 
-let pdt=[];
-
 function App() {
-  //const [showFillForm, setshowFillForm]=useState(true)
+
   const [islocalStoregeEmpty, setislocalStoregeEmpty]=useState(true)
 
+  //--------CHECK LOCAL STORAGE STATE-------
   useEffect(() => {
-    if ((localStorage.getItem('type') === null)&& (localStorage.getItem('species') === null)){
-        setislocalStoregeEmpty(true)}
-    else {setislocalStoregeEmpty(false)}
+    if ((localStorage.getItem('type') === null) && (localStorage.getItem('species') === null)){
+        setislocalStoregeEmpty(true)
+      }
+    else {
+      setislocalStoregeEmpty(false)
+    }
 }, []);
+
+//------GET REFERENCIAL CONDITIONS FOR PLANTS------- 
 
 /*const [plants,setPlants]=useState([])
       useEffect(() => {
@@ -38,6 +45,10 @@ function App() {
     });
   }, []);
  
+/*.....................................................
+-----------------------APP.JS--------------------------
+......................................................*/
+
   return (
     <div className="App">
         {islocalStoregeEmpty  && <FillForm plants={plants} />}

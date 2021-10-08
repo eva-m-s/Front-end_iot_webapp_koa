@@ -9,23 +9,17 @@ import temp from "../images/temp.png";
 import hum from "../images/hum.png";
 import sun from "../images/sun.png";
 import soil from "../images/soil.png";
+/*....................................
+---------------VARIABLES--------------
+....................................*/
 let dt=[];
 const storedType = localStorage.getItem('type');
 const storedSpecies = localStorage.getItem('species');
 
 
 const MainView = ({onOk,socket,plants}) => {
-    /*const [record]=useState([
-        {
-            "datetime": "2021-09-10 12:25:38" ,
-            "humidity": 64 ,
-            "id": "67664640-83cf-493f-bfee-54f611e39127" ,
-            "light": 95 ,
-            "soil": 0 ,
-            "temperature": 20
-            }
-            
-      ])*/
+
+//---------GET CURRENT CONDITIONS--------
       const [record,setRecord]=useState([])
       useEffect(() => {
         socket.on('getRecord', (record) => {
@@ -34,6 +28,7 @@ const MainView = ({onOk,socket,plants}) => {
         });
       }, [socket]);
       
+//--------GET CONDITIONS STATISTICS------- 
       const [data,setData]=useState([])
       useEffect(() => {
        // dt=[];
@@ -47,46 +42,9 @@ const MainView = ({onOk,socket,plants}) => {
         console.log(dt)
       }, [socket]);
 
-
-      /*const [data]=useState([
-        {
-        "average": 18.75 ,
-        "id": "36699f98-b0ec-443d-a63a-cd94ecc5325b" ,
-        "maximum": 20 ,
-        "maximumAt": "2021-09-10 12:25:38" ,
-        "minimum": 10 ,
-        "minimumAt": "2021-09-10 12:12:53" ,
-        "parameter": "temperature"
-        },
-        {
-        "average": 0.25 ,
-        "id": "888a92a6-0ca3-480d-9bef-072ec687a1e9" ,
-        "maximum": 1 ,
-        "maximumAt": "2021-09-09 13:46:37" ,
-        "minimum": 0 ,
-        "minimumAt": "2021-09-10 12:25:38" ,
-        "parameter": "soil"
-        },
-        {
-        "average": 60 ,
-        "id": "888a92a6-0ca3-480d-9bef-072ec687a111" ,
-        "maximum": 80 ,
-        "maximumAt": "2021-09-09 20:51:37" ,
-        "minimum": 54 ,
-        "minimumAt": "2021-09-10 12:25:38" ,
-        "parameter": "humidity"
-        },
-        {
-        "average": 50 ,
-        "id": "888a92a6-0ca3-480d-9bef-072ec687a111" ,
-        "maximum": 95 ,
-        "maximumAt": "2021-09-09 12:05:37" ,
-        "minimum": 8 ,
-        "minimumAt": "2021-09-10 2:25:38" ,
-        "parameter": "light"
-        }              
-      ])*/
-
+/*.....................................................
+------------ACTUAL MAIN VIEW COMPONENT------------
+......................................................*/
     return (
         <div className="container main-view ">
             <div className="row row justify-content-around">

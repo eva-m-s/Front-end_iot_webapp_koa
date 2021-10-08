@@ -1,23 +1,43 @@
 import {useState,useEffect} from 'react'
 import '../App.css';
 
+/*....................................
+---------------VARIABLES--------------
+....................................*/
+let currentType;
+let currentSpecies;
+let buttonState;
+let selectSpeciesState=true;
+
+//-------------FUNCTION TO GET TYPE--------------
 function getType(){
     const storedType = localStorage.getItem('type');
     if(!storedType) return 'Inny';
     else return JSON.parse(storedType);
-
 }
 
+//-------------FUNCTION TO GET SPECIES--------------
 function getSpecies(){
     const storedSpecies = localStorage.getItem('species');
     if(!storedSpecies) return 'Inny';
     else return JSON.parse(storedSpecies);
 }
 
-
 const FillForm = ({plants}) => {
+
     const [type, setType]=useState(getType)
     const [species, setSpecies]=useState(getSpecies)
+
+    /*.....................................................
+    -----------SET BUTTONSTATE WHEN PAGE RENDERS-----------
+    ......................................................*/
+    useEffect(() => {
+    currentType = document.getElementById("select_type").value;
+    currentSpecies = document.getElementById("select_species").value;
+    (currentType!=='Wybierz typ' && currentSpecies!=='Wybierz gatunek')
+    ? buttonState=false
+    : buttonState=true
+    }, [])
 
     /*useEffect(() => {
 		localStorage.setItem('type', JSON.stringify(type));
@@ -36,13 +56,17 @@ const FillForm = ({plants}) => {
         return console.log(names)
     })}*/
 
+    /*.....................................................
+    ------------------OK BUTTON FUNCTION-------------------
+    ......................................................*/
     const onAccept=()=>{
         localStorage.setItem('type', JSON.stringify(type));
         localStorage.setItem('species', JSON.stringify(species));
     }
 
-
-
+    /*.....................................................
+    ------------ACTUAL FILL FORM COMPONENT------------
+    ......................................................*/
         return (
             <div className="container fill-form">
                 <form>
@@ -55,12 +79,22 @@ const FillForm = ({plants}) => {
                     
                     <div className="form-group">
                         <label>Typ</label>
-                        <select className="form-select custom-select mb-3" onChange={(e)=>{
+                        <select className="form-select custom-select mb-3" id="select_type" onClick={(e)=>{
+                            selectSpeciesState=false;
                             setType(e.target.value)
-                            console.log(type)
+                            currentType=document.getElementById("select_type").value; 
+                            currentSpecies = document.getElementById("select_species").value; 
+                            console.log(currentType,currentSpecies)
+                            if(currentType!=='Wybierz typ' && currentSpecies!=='Wybierz gatunek')
+                            {
+                                buttonState=false
+                            }
+                            else {
+                                buttonState=true
+                            }
                         }}>
-                            <option  defaultValue>{type}</option>
-                            {plants.filter(plant =>plant.type !==type).flatMap((plant) => (
+                            <option hidden className="select-form-default" defaultValue>Wybierz typ</option>
+                            {plants.flatMap((plant) => (
                             <option key ={plant.id} value={plant.type}>{plant.type}</option>
                             ))} 
                         </select>
@@ -68,17 +102,24 @@ const FillForm = ({plants}) => {
 
                     <div className="form-group">
                         <label>Gatunek</label>
-                        <select className="form-select mb-3" onChange={(e)=>{
+                        <select disabled ={selectSpeciesState} className="form-select mb-3" id="select_species" onClick={(e)=>{
                         setSpecies(e.target.value)
-                        console.log(species)
+                        currentType = document.getElementById("select_type").value;
+                        currentSpecies = document.getElementById("select_species").value;
+                        if (currentSpecies!=='Wybierz gatunek' && currentType!=='Wybierz typ')
+                            {
+                                buttonState=false
+                            }
+                        else {
+                            buttonState=true
+                        }  
                         }}>
-                            
-                            <option hidden defaultValue>{species}</option>
+                            <option hidden className="select-form-default" defaultValue>Wybierz gatunek</option>
                             {type !== 'Inny' && <option value="Inny">Inny</option>}
                             {
                             type !== 'Inny'
                             ? (plants.filter(plant => plant.type === type).flatMap(plant => (
-                            plant.species.flatMap(function(names){
+                            plant.species.flatMap(function(names,index){
                             return <option key ={names.nr} value={names.name}>{names.name}</option>
                             }))))
                             : plants.flatMap((plant) => (
@@ -90,8 +131,7 @@ const FillForm = ({plants}) => {
 
                     </div>
                     
-                    <button onClick={onAccept} className="w-100 btn btn-lg btn-success">OK</button>
-
+                    <button disabled = {buttonState} onClick={onAccept} className="w-100 btn btn-lg btn-success">OK</button>
                 </form>
             </div>
         )

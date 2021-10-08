@@ -8,18 +8,18 @@ const plants=[
 	{
 		nr: 11,
 		name: 'Opuncja',
-		temp: 'hot' ,
-		hum: 'medium' ,
-		soil: 'dry' ,
-		ligh: 'strong' 
+		temp: 3 ,
+		hum: 2 ,
+		soil: 1 ,
+		light: 3 
 	},
 	{
 		nr: 12,
 		name: 'Aloes',
-		temp: 'hot' ,
-		hum: 'high' ,
-		soil: 'dry' ,
-		ligh: 'strong' 
+		temp: 3 ,
+		hum: 3 ,
+		soil: 1 ,
+		light: 3 
 	},
 	]},
 	{
@@ -29,18 +29,18 @@ const plants=[
 		{
 			nr: 14,
 			name: 'Storczyk',
-			temp: 25 ,
-			hum: 'medium' ,
-			soil: 'medium' ,
-			ligh: 'medium' 
+			temp: 2 ,
+			hum: 2 ,
+			soil: 3 ,
+			light: 2 
 		},
 		{
 			nr: 15,
 			name: 'Skrzydłokwiat',
-			temp: 15 ,
-			hum: 'low' ,
-			soil: 'wet' ,
-			ligh: 'low' 
+			temp: 1 ,
+			hum: 1 ,
+			soil: 2 ,
+			light: 2 
 		}
 	]},
 	{
@@ -50,23 +50,22 @@ const plants=[
 		  {
 			  name: 'Inny',
 			  nr: 16,
-			  temp: 'medium' ,
-			  hum: 'medium' ,
-			  soil: 'medium' ,
-			  ligh: 'medium' 
-		  }
+			  temp: [1,3,2] ,
+			  hum: [2,2,1] ,
+			  soil: [2,1,3],
+			  light: [2,3,2] 
+		  },
 	  ]}
   ] 
 
 const record =
-
 {
 	"datetime": "2021-09-10 12:25:38" ,
-	"humidity": 10 ,
+	"humidity": 90 ,
 	"id": "67664640-83cf-493f-bfee-54f611e39127" ,
-	"light": 2 ,
-	"soil": 5 ,
-	"temperature": 80
+	"light": 95 ,
+	"soil": 70 ,
+	"temperature": 10
 	}
 	const data =[
 	{
